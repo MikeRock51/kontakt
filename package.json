@@ -4,6 +4,8 @@
   "description": "A simple contact directory",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon --require @babel/register index.js",
+    "prod": "node --require @babel/register index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mike Rock",
