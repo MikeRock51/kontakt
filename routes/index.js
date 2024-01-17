@@ -44,6 +44,7 @@ router.post("/contacts", async (req, res) => {
   });
 });
 router.get("/users/contacts", ContactController.getUserContacts);
+router.get("/contacts/:contactID", ContactController.getContact);
 router.get("/status", async (req, res) => {
   res.status(200).json({ status: "Green", message: "All systems GO!!!" });
 });

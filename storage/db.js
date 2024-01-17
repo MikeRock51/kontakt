@@ -60,9 +60,16 @@ class DBClient {
     return response.insertedId.toString();
   }
 
+  // Retrieved all contacts associated with the user based on userID
   async fetchUserContacts(userID) {
     const contacts = await this.contactsCollection.find({ userID: new ObjectId(userID) });
     return contacts.toArray();
+  }
+
+  // Retrieve a single contact based on id
+  async fetchContact(contactID) {
+    const contact = await this.contactsCollection.findOne({ _id: new ObjectId(contactID) });
+    return contact;
   }
 
   async updateChatHistory(chatID, updatedHistory) {

@@ -48,15 +48,16 @@ class ContactController {
       contact.avatar = request.file.filename;
     }
     contact.userID = new ObjectId(userID);
+    contact.views = 0;
 
     const contactID = await dbClient.createContact(contact);
-    delete contact._id;
+    // delete contact._id;
     response
       .status(201)
       .json({
         status: "Success",
         message: "Contact Created Successfully!",
-        id: contactID,
+        // id: contactID,
         ...contact,
       })
       .end();
@@ -98,6 +99,7 @@ class ContactController {
 
   static async getContact(request, response) {
     const token = request.headers["auth_token"];
+    const contactID = request.params.contactID;
 
     if (!token) {
       response.status(401).json({
@@ -117,6 +119,36 @@ class ContactController {
         data: null,
       });
     }
+
+    const contact = await dbClient.fetchContact(contactID);
+    if (!contact) {
+      response
+      .status(404)
+      .json({
+        status: "Error",
+        message: "Contact not found!",
+        data: null
+      })
+      .end();
+    } else if (contact.userID.toString() !== userID) {
+      response
+      .status(401)
+      .json({
+        status: "Error",
+        message: "You are not authorized to view this contact!",
+        data: null
+      })
+      .end();
+    }
+    
+    response
+      .status(200)
+      .json({
+        status: "Success",
+        message: "Contact retrieved successfully!",
+        data: contact
+      })
+      .end();
   }
 }
 
