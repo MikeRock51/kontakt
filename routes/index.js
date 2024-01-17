@@ -1,12 +1,12 @@
 import express from 'express';
 import UsersController from '../controllers/UserController';
-// import AuthController from '../controllers/AuthController';
+import AuthController from '../controllers/AuthController';
 // import ChatController from "../controllers/ChatController";
 
 const router = express.Router();
 
 router.post('/users', UsersController.postNew);
-// router.post('/sign_in', AuthController.getConnect);
+router.post('/sign_in', AuthController.signIn);
 // router.get('/sign_out', AuthController.getDisconnect);
 // router.get('/users/me', AuthController.getMe);
 // router.post("/chats", ChatController.createChat);
