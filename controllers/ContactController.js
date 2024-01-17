@@ -10,13 +10,13 @@ class ContactController {
       if (!contact.hasOwnProperty(field)) {
         response
           .status(400)
-          .json({ error: `Missing required field: ${field}` })
+          .json({ status: "error", message: `Missing required field: ${field}`, data: null })
           .end();
       }
       if (field === "phoneNumbers" && typeof(contact[field]) !== "object") {
         response
           .status(400)
-          .json({ error: "phoneNumbers field must be a object" })
+          .json({ status: "error", message: "phoneNumbers field must be a object", data: null })
           .end();
       }
     });
@@ -30,16 +30,10 @@ class ContactController {
       }
     }
 
-    // const userID = await dbClient.createContact({
-    //     email,
-    //     username,
-    //     password: hashedPassword,
-    // });
+    const contactID = await dbClient.createContact(contact);
+    delete contact._id
+    response.status(201).json({ status: "Success", message: "Contact Created Successfully!", id: contactID, ...contact }).end();
 
-    // response.status(201).json({ status: "User Created Successfully!", id: userID, email, username }).end();
-
-    console.log(contact);
-    response.status(200).json({ status: "done" }).end();
   }
 }
 

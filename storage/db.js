@@ -28,7 +28,7 @@ class DBClient {
       .then(() => {
         this.isConnected = true;
         this.usersCollection = this.client.db().collection('users');
-        this.ccontactsCollection = this.client.db().collection('contacts');
+        this.contactsCollection = this.client.db().collection('contacts');
       })
       .catch((error) => {
         this.isConnected = false;
@@ -38,11 +38,6 @@ class DBClient {
 
   isAlive() {
     return this.isConnected;
-  }
-
-  async nbUsers() {
-    const userNb = await this.usersCollection.countDocuments();
-    return userNb;
   }
 
   async fetchUserByEmail(email) {
@@ -60,14 +55,8 @@ class DBClient {
     return user;
   }
 
-  /**
-   * Creates a new chat history in the chats collection.
-   *
-   * @param {Object} chat - The chat object.
-   * @returns {Promise<string>} - The ID of the inserted chat history.
-   */
-  async createChatHistory(chat) {
-    const response = await this.chatsCollection.insertOne(chat);
+  async createContact(contact) {
+    const response = await this.contactsCollection.insertOne(contact);
     return response.insertedId.toString();
   }
 
