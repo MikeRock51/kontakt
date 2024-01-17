@@ -57,18 +57,12 @@ class AuthController {
     }
   }
 
-  /**
-   * Logs out a user by deleting their authentication token.
-   *
-   * @async
-   * @param {Object} request - The request object.
-   * @param {Object} response - The response object.
-   * @returns {Promise<void>} - A Promise that resolves when the operation is complete.
-   */
-  static async getDisconnect(request, response) {
-    const token = request.headers["auth-token"];
+  static async signOut(request, response) {
+    const token = request.headers["auth_token"];
     const key = `auth_${token}`;
+    console.log(key)
     const userID = await redisClient.get(key);
+    console.log(userID)
 
     if (!userID) {
       response
@@ -98,16 +92,8 @@ class AuthController {
     }
   }
 
-  /**
-   * Retrieves the information of the authenticated user.
-   *
-   * @async
-   * @param {Object} request - The request object.
-   * @param {Object} response - The response object.
-   * @returns {Promise<void>} - A Promise that resolves when the operation is complete.
-   */
   static async getMe(request, response) {
-    const token = request.headers["auth-token"];
+    const token = request.headers["auth_token"];
     const key = `auth_${token}`;
 
     try {
@@ -150,7 +136,7 @@ class AuthController {
         }
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }

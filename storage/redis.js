@@ -31,10 +31,11 @@ class RedisClient {
   }
 
   async set(key, value, duration) {
+    console.log(key, value)
     try {
       await this.client.set(key, value, "EX", duration);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
