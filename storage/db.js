@@ -60,13 +60,7 @@ class DBClient {
     return response.insertedId.toString();
   }
 
-  /**
-   * Retrieves chat history for a user from the chats collection.
-   *
-   * @param {string} userID - The user ID.
-   * @returns {Promise<Object | null>} - The chat history object or null if not found.
-   */
-  async fetchUserChat(userID) {
+  async fetchContact(contactID) {
     const chats = await this.chatsCollection.findOne({ userID: new ObjectId(userID) });
     return chats;
   }
