@@ -60,10 +60,8 @@ class AuthController {
   static async signOut(request, response) {
     const token = request.headers["auth_token"];
     const key = `auth_${token}`;
-    console.log(key)
     const userID = await redisClient.get(key);
-    console.log(userID)
-
+    
     if (!userID) {
       response
         .status(401)
