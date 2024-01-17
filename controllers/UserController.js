@@ -1,9 +1,8 @@
 import sha1 from "sha1";
 import dbClient from "../storage/db";
-import { ObjectId } from 'mongodb';
 
 
-class UsersController {
+class UserController {
   static async postNew(request, response) {
     const { email, password, username } = request.body;
 
@@ -28,4 +27,4 @@ class UsersController {
   }
 }
 
-export default UsersController;
+export default UserController;
