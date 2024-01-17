@@ -1,4 +1,7 @@
 import dbClient from "../storage/db";
+import redisClient from "../storage/redis";
+import { ObjectId } from "mongodb";
+
 
 class ContactController {
   static async postContact(request, response, userID) {
@@ -44,7 +47,7 @@ class ContactController {
     if (request.file) {
       contact.avatar = request.file.filename;
     }
-    contact.userID = userID;
+    contact.userID = new ObjectId(userID);
 
     const contactID = await dbClient.createContact(contact);
     delete contact._id;
@@ -55,6 +58,40 @@ class ContactController {
         message: "Contact Created Successfully!",
         id: contactID,
         ...contact,
+      })
+      .end();
+  }
+
+  static async getUserContacts(request, response) {
+    const token = request.headers["auth_token"];
+
+    if (!token) {
+      response.status(401).json({
+        status: "error",
+        message: "Unauthorized! auth-token required",
+        data: null,
+      }).end();
+    }
+
+    const key = `auth_${token}`;
+    const userID = await redisClient.get(key);
+
+    if (!userID) {
+      response.status(401).json({
+        status: "error",
+        message: "Unauthorized! invalid token",
+        data: null,
+      }).end();
+    }
+
+    const contacts = await dbClient.fetchUserContacts(userID);
+    
+    response
+      .status(200)
+      .json({
+        status: "Success",
+        message: "User contacts retrieved successfully!",
+        data: contacts
       })
       .end();
   }

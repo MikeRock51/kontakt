@@ -60,18 +60,11 @@ class DBClient {
     return response.insertedId.toString();
   }
 
-  async fetchContact(contactID) {
-    const chats = await this.chatsCollection.findOne({ userID: new ObjectId(userID) });
-    return chats;
+  async fetchUserContacts(userID) {
+    const contacts = await this.contactsCollection.find({ userID: new ObjectId(userID) });
+    return contacts.toArray();
   }
 
-  /**
-   * Updates the chat history in the chats collection.
-   *
-   * @param {string} chatID - The ID of the chat history.
-   * @param {Array} updatedHistory - The updated chat history.
-   * @returns {Promise<void>} - A Promise that resolves when the operation is complete.
-   */
   async updateChatHistory(chatID, updatedHistory) {
     console.log(chatID);
     try {

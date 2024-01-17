@@ -13,7 +13,7 @@ router.get("/sign_out", AuthController.signOut);
 router.get("/users/me", AuthController.getMe);
 router.post("/contacts", async (req, res) => {
   const token = req.headers["auth_token"];
-  
+
   if (!token) {
     res.status(401).json({
       status: "error",
@@ -43,6 +43,7 @@ router.post("/contacts", async (req, res) => {
     }
   });
 });
+router.get("/users/contacts", ContactController.getUserContacts);
 router.get("/status", async (req, res) => {
   res.status(200).json({ status: "Green", message: "All systems GO!!!" });
 });
