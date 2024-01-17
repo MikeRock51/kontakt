@@ -40,17 +40,10 @@ class ContactController {
         delete contact[key];
       }
     }
-
-    console.log(contact)
-
-    // response
-    //   .status(201)
-    //   .json({
-    //     status: "Success",
-    //     message: "Contact Created Successfully!",
-    //     ...contact,
-    //   })
-    //   .end();
+    
+    if (request.file) {
+        contact.avatar = request.file.filename;
+    }
 
     const contactID = await dbClient.createContact(contact);
     delete contact._id
