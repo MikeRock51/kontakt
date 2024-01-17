@@ -12,6 +12,7 @@ class DBClient {
     this.contactsCollection = null;
 
     const password = process.env.DB_PASSWORD;
+    console.log(password)
     const uri = `mongodb+srv://MikeRock:${password}@cluster0.qyotcp1.mongodb.net/${database}?retryWrites=true&w=majority`;
 
     this.client = new MongoClient(uri, {
