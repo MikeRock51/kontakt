@@ -3,6 +3,7 @@ import './App.css';
 import Toast from "./providers/ToastProvider";
 import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
+import ContactsPage from "./pages/ContactsPage";
 
 function App() {
   return (
@@ -15,9 +16,9 @@ function App() {
             <Routes>
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/signin" element={<SignInPage />} />
+              <Route path="/contacts" element={<ContactsPage />} />
               {/* <Route path="/" element={<LandingPage />} />
               <Route path="/food/:id" element={<FoodDetails />} />
-              <Route path="/profile" element={<Profile />} />
               <Route path="/recipes/new" element={<CreateRecipe />} />
               <Route path="/recipes/me" element={<MyRecipes />} />
               <Route path="/yishu" element={<ChatPage />} /> */}
