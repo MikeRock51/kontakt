@@ -43,6 +43,38 @@ router.post("/contacts", async (req, res) => {
     }
   });
 });
+router.put("/contacts/:contactID", async (req, res) => {
+  const token = req.headers["auth_token"];
+
+  if (!token) {
+    res.status(401).json({
+      status: "error",
+      message: "Unauthorized! auth-token required",
+      data: null,
+    });
+  }
+
+  const key = `auth_${token}`;
+  const userID = await redisClient.get(key);
+
+  if (!userID) {
+    res.status(401).json({
+      status: "error",
+      message: "Unauthorized! invalid token",
+      data: null,
+    });
+  }
+  upload(req, res, function (err) {
+    if (err) {
+      return res
+        .status(400)
+        .json({ status: "error", message: err.message, data: null })
+        .end();
+    } else {
+      ContactController.updateContact(req, res, userID);
+    }
+  });
+});
 router.get("/users/contacts", ContactController.getUserContacts);
 router.get("/contacts/:contactID", ContactController.getContact);
 router.get("/status", async (req, res) => {

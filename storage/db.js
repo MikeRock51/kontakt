@@ -72,23 +72,22 @@ class DBClient {
     return contact;
   }
 
-  async updateChatHistory(chatID, updatedHistory) {
-    console.log(chatID);
+  async updateContact(contactID, updateData) {
     try {
-      await this.chatsCollection.updateOne(
-        { _id: chatID },
-        { $set: { history: updatedHistory } }
+      const contact = await this.contactsCollection.findOneAndUpdate(
+        { _id: new ObjectId(contactID) },
+        { $set: updateData },
+        { returnDocument: 'after' }
       );
+      return contact;
     } catch (error) {
-      console.error("Error saving chat history:", error);
+      console.error("Error updating contact:", error);
       throw error;
     }
   }
 }
 
-/**
- * Creates a singleton instance of the DBClient.
- */
+
 const dbClient = new DBClient();
 
 export default dbClient;

@@ -1,6 +1,7 @@
 import dbClient from "../storage/db";
 import redisClient from "../storage/redis";
 import { ObjectId } from "mongodb";
+import deleteFile from "../middleware/deleteFile";
 
 
 class ContactController {
@@ -120,6 +121,14 @@ class ContactController {
       });
     }
 
+    if (!contactID) {
+      response.status(400).json({
+        status: "error",
+        message: "Missing required contactID",
+        data: null,
+      });
+    }
+
     const contact = await dbClient.fetchContact(contactID);
     if (!contact) {
       response
@@ -149,6 +158,69 @@ class ContactController {
         data: contact
       })
       .end();
+  }
+
+  static async updateContact(request, response, userID) {
+    const contactID = request.params.contactID;
+    const updateData = request.body
+    const contactFields = ["firstName", "phoneNumbers", "lastName", "email", "title"];
+
+    if (!contactID) {
+      response.status(400).json({
+        status: "error",
+        message: "Missing required contactID",
+        data: null,
+      });
+    }
+
+    const contact = await dbClient.fetchContact(contactID);
+    if (!contact) {
+      response
+      .status(404)
+      .json({
+        status: "Error",
+        message: "Contact not found!",
+        data: null
+      })
+      .end();
+    } else if (contact.userID.toString() !== userID) {
+      return response
+      .status(401).json({
+        status: "error",
+        message: "You are not authorized to update this contact!",
+        data: null
+      }).end();
+    }
+
+    for (const [key, value] of Object.entries(updateData)) {
+      if (!value || !contactFields.includes(key)) {
+        delete updateData[key];
+      }
+    }
+
+    if (request.file) {
+      deleteFile(contact.avatar);
+      updateData.avatar = request.file.filename;
+    }
+
+    let updatedContact;
+    try {
+      updatedContact = await dbClient.updateContact(contactID, updateData);
+    } catch(error) {
+      response
+      .status(503).json({
+        status: "error",
+        message: `Error updating contact: ${error.message}`,
+        data: null
+      }).end();
+    }
+    
+    response
+      .status(200).json({
+        status: "success",
+        message: "Contact updated successfully!",
+        data: updatedContact
+      }).end();
   }
 }
 
