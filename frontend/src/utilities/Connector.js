@@ -13,7 +13,8 @@ export async function CreateUser(userData, setError) {
     return true;
   } catch (error) {
     console.log(error);
-    setError(error.response.data.message);
+    toast.error(error.response?.data?.error || "Network error");
+    // setError(error.response?.data?.message || "Network error");
     return false;
   }
 }

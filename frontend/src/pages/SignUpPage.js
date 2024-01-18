@@ -1,8 +1,16 @@
 import FormSide from "../components/FormSide";
 import { useFormik } from "formik";
 import { SignUpValidationSchema } from "../utilities/Validators";
+import { CreateUser } from "../utilities/Connector";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function SignUpPage() {
+  const [ error, setError ] = useState("");
+  const [ loading, setLoading ] = useState(false);
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -11,8 +19,16 @@ export default function SignUpPage() {
       confirmPassword: '',
     },
     validationSchema: SignUpValidationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      setError(false);
+      setLoading(true);
+      const success = await CreateUser(values, setError);
+      if (success) {
+        setTimeout(() => {
+            navigate('/signin');
+          }, 400);
+      }
+      setLoading(false);
     },
   });
     return (
@@ -126,8 +142,8 @@ export default function SignUpPage() {
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
-                    <button type="submit" className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
-                      REGISTER NOW
+                    <button type="submit" disabled={loading} className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold disabled:bg-gray-500">
+                      {loading ? "Registering..." : "REGISTER NOW"}
                     </button>
                   </div>
                 </div>
