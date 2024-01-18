@@ -22,7 +22,7 @@ export async function LoginUser(userData) {
     const response = await axios.post(API_URL + "/sign_in", userData);
     console.log(response);
     toast.success(response.data.message);
-    return { token: response.data["auth_token"], user: response.data.data };
+    return response.data.data;
   } catch (error) {
     console.log(error);
     toast.error(error.response.data.error || "Error signing you in...");

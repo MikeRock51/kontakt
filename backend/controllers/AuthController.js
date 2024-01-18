@@ -24,7 +24,7 @@ class AuthController {
             .json({
               status: "success",
               message: "Sign in successful",
-              data: { auth_token: token },
+              data: { auth_token: token, user },
             })
             .end();
         } else {

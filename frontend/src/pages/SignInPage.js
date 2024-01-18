@@ -4,10 +4,12 @@ import { SignInValidationSchema } from "../utilities/Validators";
 import { LoginUser } from "../utilities/Connector";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../stores/authStore";
 
 export default function SignInPage() {
   const [ loading, setLoading ] = useState(false);
   const navigate = useNavigate();
+  const {setCurrentUser, setAuthToken } = useUserStore();
 
   const formik = useFormik({
     initialValues: {
@@ -17,13 +19,14 @@ export default function SignInPage() {
     validationSchema: SignInValidationSchema,
     onSubmit: async (values) => {
     setLoading(true);
-      const success = await LoginUser(values);
-      if (success) {
-        setTimeout(() => {
-            navigate('/contacts');
-          }, 400);
-      }
+    const data = await LoginUser(values);
+    console.log(data)
+    if (data) {
+      setCurrentUser(data.user);
+      setAuthToken(data.auth_token);
       setLoading(false);
+      navigate("/contacts");
+    }
     },
   });
     return (
