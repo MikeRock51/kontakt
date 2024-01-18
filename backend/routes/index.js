@@ -4,6 +4,7 @@ import AuthController from "../controllers/AuthController";
 import ContactController from "../controllers/ContactController";
 import upload from "../middleware/uploadFile";
 import redisClient from "../storage/redis";
+import dbClient from "../storage/db";
 
 const router = express.Router();
 
@@ -26,12 +27,22 @@ router.post("/contacts", async (req, res) => {
   const userID = await redisClient.get(key);
 
   if (!userID) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       message: "Unauthorized! invalid token",
       data: null,
     });
   }
+
+  const user = await dbClient.fetchUserByID(userID);
+  if (!user) {
+    return res.status(404).json({
+      status: "error",
+      message: "User does not exist",
+      data: null,
+    });
+  }
+
   upload(req, res, function (err) {
     if (err) {
       return res
@@ -64,6 +75,16 @@ router.put("/contacts/:contactID", async (req, res) => {
       data: null,
     });
   }
+
+  const user = await dbClient.fetchUserByID(userID);
+  if (!user) {
+    return res.status(404).json({
+      status: "error",
+      message: "User does not exist",
+      data: null,
+    });
+  }
+  
   upload(req, res, function (err) {
     if (err) {
       return res

@@ -81,7 +81,7 @@ class ContactController {
     const userID = await redisClient.get(key);
 
     if (!userID) {
-      response
+      return response
         .status(401)
         .json({
           status: "error",
@@ -262,6 +262,15 @@ class ContactController {
       response.status(401).json({
         status: "error",
         message: "Unauthorized! invalid token",
+        data: null,
+      });
+    }
+
+    const user = await dbClient.fetchUserByID(userID);
+    if (!user) {
+      return res.status(404).json({
+        status: "error",
+        message: "User does not exist",
         data: null,
       });
     }
