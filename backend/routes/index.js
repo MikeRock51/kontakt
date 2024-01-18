@@ -77,6 +77,7 @@ router.put("/contacts/:contactID", async (req, res) => {
 });
 router.get("/users/contacts", ContactController.getUserContacts);
 router.get("/contacts/:contactID", ContactController.getContact);
+router.delete("/contacts/:contactID", ContactController.deleteContact);
 router.get("/status", async (req, res) => {
   res.status(200).json({ status: "Green", message: "All systems GO!!!" });
 });

@@ -3,7 +3,6 @@ import redisClient from "../storage/redis";
 import { ObjectId } from "mongodb";
 import deleteFile from "../middleware/deleteFile";
 
-
 class ContactController {
   static async postContact(request, response, userID) {
     const contact = request.body;
@@ -68,32 +67,38 @@ class ContactController {
     const token = request.headers["auth_token"];
 
     if (!token) {
-      response.status(401).json({
-        status: "error",
-        message: "Unauthorized! auth-token required",
-        data: null,
-      }).end();
+      response
+        .status(401)
+        .json({
+          status: "error",
+          message: "Unauthorized! auth-token required",
+          data: null,
+        })
+        .end();
     }
 
     const key = `auth_${token}`;
     const userID = await redisClient.get(key);
 
     if (!userID) {
-      response.status(401).json({
-        status: "error",
-        message: "Unauthorized! invalid token",
-        data: null,
-      }).end();
+      response
+        .status(401)
+        .json({
+          status: "error",
+          message: "Unauthorized! invalid token",
+          data: null,
+        })
+        .end();
     }
 
     const contacts = await dbClient.fetchUserContacts(userID);
-    
+
     response
       .status(200)
       .json({
         status: "Success",
         message: "User contacts retrieved successfully!",
-        data: contacts
+        data: contacts,
       })
       .end();
   }
@@ -133,40 +138,46 @@ class ContactController {
 
     if (!contact) {
       response
-      .status(404)
-      .json({
-        status: "Error",
-        message: "Contact not found!",
-        data: null
-      })
-      .end();
+        .status(404)
+        .json({
+          status: "Error",
+          message: "Contact not found!",
+          data: null,
+        })
+        .end();
     } else if (contact.userID.toString() !== userID) {
       response
-      .status(401)
-      .json({
-        status: "Error",
-        message: "You are not authorized to view this contact!",
-        data: null
-      })
-      .end();
+        .status(401)
+        .json({
+          status: "Error",
+          message: "You are not authorized to view this contact!",
+          data: null,
+        })
+        .end();
     }
 
     const updatedContact = await dbClient.updateContactView(contactID);
-    
+
     response
       .status(200)
       .json({
         status: "Success",
         message: "Contact retrieved successfully!",
-        data: updatedContact
+        data: updatedContact,
       })
       .end();
   }
 
   static async updateContact(request, response, userID) {
     const contactID = request.params.contactID;
-    const updateData = request.body
-    const contactFields = ["firstName", "phoneNumbers", "lastName", "email", "title"];
+    const updateData = request.body;
+    const contactFields = [
+      "firstName",
+      "phoneNumbers",
+      "lastName",
+      "email",
+      "title",
+    ];
 
     if (!contactID) {
       response.status(400).json({
@@ -179,20 +190,22 @@ class ContactController {
     const contact = await dbClient.fetchContact(contactID);
     if (!contact) {
       response
-      .status(404)
-      .json({
-        status: "Error",
-        message: "Contact not found!",
-        data: null
-      })
-      .end();
+        .status(404)
+        .json({
+          status: "Error",
+          message: "Contact not found!",
+          data: null,
+        })
+        .end();
     } else if (contact.userID.toString() !== userID) {
       return response
-      .status(401).json({
-        status: "error",
-        message: "You are not authorized to update this contact!",
-        data: null
-      }).end();
+        .status(401)
+        .json({
+          status: "error",
+          message: "You are not authorized to update this contact!",
+          data: null,
+        })
+        .end();
     }
 
     for (const [key, value] of Object.entries(updateData)) {
@@ -209,21 +222,101 @@ class ContactController {
     let updatedContact;
     try {
       updatedContact = await dbClient.updateContact(contactID, updateData);
-    } catch(error) {
+    } catch (error) {
       response
-      .status(503).json({
-        status: "error",
-        message: `Error updating contact: ${error.message}`,
-        data: null
-      }).end();
+        .status(503)
+        .json({
+          status: "error",
+          message: `Error updating contact: ${error.message}`,
+          data: null,
+        })
+        .end();
     }
-    
+
     response
-      .status(200).json({
+      .status(200)
+      .json({
         status: "success",
         message: "Contact updated successfully!",
-        data: updatedContact
-      }).end();
+        data: updatedContact,
+      })
+      .end();
+  }
+
+  static async deleteContact(request, response) {
+    const contactID = request.params.contactID;
+    const token = request.headers["auth_token"];
+
+    if (!token) {
+      response.status(401).json({
+        status: "error",
+        message: "Unauthorized! auth_token required",
+        data: null,
+      });
+    }
+
+    const key = `auth_${token}`;
+    const userID = await redisClient.get(key);
+
+    if (!userID) {
+      response.status(401).json({
+        status: "error",
+        message: "Unauthorized! invalid token",
+        data: null,
+      });
+    }
+
+    if (!contactID) {
+      response.status(400).json({
+        status: "error",
+        message: "Missing required contactID",
+        data: null,
+      });
+    }
+
+    const contact = await dbClient.fetchContact(contactID);
+
+    if (!contact) {
+      response
+        .status(404)
+        .json({
+          status: "Error",
+          message: "Contact not found!",
+          data: null,
+        })
+        .end();
+    } else if (contact.userID.toString() !== userID) {
+      response
+        .status(401)
+        .json({
+          status: "Error",
+          message: "You are not authorized to delete this contact!",
+          data: null,
+        })
+        .end();
+    }
+
+    try {
+      await dbClient.deleteContact(contactID);
+    } catch (error) {
+      return response
+        .status(200)
+        .json({
+          status: "error",
+          message: `Error deleting contact: ${error.message}`,
+          data: null,
+        })
+        .end();
+    }
+
+    response
+      .status(200)
+      .json({
+        status: "success",
+        message: "Contact deleted successfully!",
+        data: null,
+      })
+      .end();
   }
 }
 

@@ -100,6 +100,23 @@ class DBClient {
     );
     return contact;
   }
+
+  async deleteContact(contactID) {
+    try {
+      const result = await this.contactsCollection.deleteOne({
+        _id: new ObjectId(contactID),
+      });
+  
+      if (result.deletedCount === 1) {
+        console.log('Contact deleted successfully');
+      } else {
+        console.log('Contact not found or not deleted');
+      }
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+      throw error;
+    }
+  }
 }
 
 const dbClient = new DBClient();
