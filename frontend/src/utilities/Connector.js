@@ -1,11 +1,10 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-// import { calcTokenExp } from "./Utilities";
 
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-export async function CreateUser(userData, setError) {
+export async function CreateUser(userData) {
   try {
     const response = await axios.post(API_URL + "/users", userData);
     console.log(response);
@@ -14,24 +13,22 @@ export async function CreateUser(userData, setError) {
   } catch (error) {
     console.log(error);
     toast.error(error.response?.data?.error || "Network error");
-    // setError(error.response?.data?.message || "Network error");
     return false;
   }
 }
 
-// export async function LoginUser(userData, setError) {
-//   try {
-//     const response = await axios.post(API_URL + "/login", userData);
-//     console.log(response);
-//     const tokenExp = calcTokenExp();
-//     toast.success(response.data.message);
-//     return { token: response.data["auth-token"], exp: tokenExp, user: response.data.data };
-//   } catch (error) {
-//     console.log(error);
-//     setError(error.response.data.message);
-//     return false;
-//   }
-// }
+export async function LoginUser(userData) {
+  try {
+    const response = await axios.post(API_URL + "/sign_in", userData);
+    console.log(response);
+    toast.success(response.data.message);
+    return { token: response.data["auth_token"], user: response.data.data };
+  } catch (error) {
+    console.log(error);
+    toast.error(error.response.data.error || "Error signing you in...");
+    return false;
+  }
+}
 
 export async function LogoutUser(token) {
   try {
