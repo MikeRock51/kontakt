@@ -1,4 +1,4 @@
-import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import { config } from "dotenv";
 
 config();
@@ -12,7 +12,7 @@ class DBClient {
     this.contactsCollection = null;
 
     const password = process.env.DB_PASSWORD;
-    console.log(password)
+    console.log(password);
     const uri = `mongodb+srv://MikeRock:${password}@cluster0.qyotcp1.mongodb.net/${database}?retryWrites=true&w=majority`;
 
     this.client = new MongoClient(uri, {
@@ -27,8 +27,8 @@ class DBClient {
       .connect()
       .then(() => {
         this.isConnected = true;
-        this.usersCollection = this.client.db().collection('users');
-        this.contactsCollection = this.client.db().collection('contacts');
+        this.usersCollection = this.client.db().collection("users");
+        this.contactsCollection = this.client.db().collection("contacts");
       })
       .catch((error) => {
         this.isConnected = false;
@@ -51,7 +51,9 @@ class DBClient {
   }
 
   async fetchUserByID(userID) {
-    const user = await this.usersCollection.findOne({ _id: new ObjectId(userID) });
+    const user = await this.usersCollection.findOne({
+      _id: new ObjectId(userID),
+    });
     return user;
   }
 
@@ -62,13 +64,17 @@ class DBClient {
 
   // Retrieved all contacts associated with the user based on userID
   async fetchUserContacts(userID) {
-    const contacts = await this.contactsCollection.find({ userID: new ObjectId(userID) });
+    const contacts = await this.contactsCollection.find({
+      userID: new ObjectId(userID),
+    });
     return contacts.toArray();
   }
 
   // Retrieve a single contact based on id
   async fetchContact(contactID) {
-    const contact = await this.contactsCollection.findOne({ _id: new ObjectId(contactID) });
+    const contact = await this.contactsCollection.findOne({
+      _id: new ObjectId(contactID),
+    });
     return contact;
   }
 
@@ -77,7 +83,7 @@ class DBClient {
       const contact = await this.contactsCollection.findOneAndUpdate(
         { _id: new ObjectId(contactID) },
         { $set: updateData },
-        { returnDocument: 'after' }
+        { returnDocument: "after" }
       );
       return contact;
     } catch (error) {
@@ -85,8 +91,16 @@ class DBClient {
       throw error;
     }
   }
-}
 
+  async updateContactView(contactID) {
+    const contact = await this.contactsCollection.findOneAndUpdate(
+      { _id: new ObjectId(contactID) },
+      { $inc: { views: 1 } },
+      { returnDocument: "after" }
+    );
+    return contact;
+  }
+}
 
 const dbClient = new DBClient();
 

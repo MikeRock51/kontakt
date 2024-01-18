@@ -130,6 +130,7 @@ class ContactController {
     }
 
     const contact = await dbClient.fetchContact(contactID);
+
     if (!contact) {
       response
       .status(404)
@@ -149,13 +150,15 @@ class ContactController {
       })
       .end();
     }
+
+    const updatedContact = await dbClient.updateContactView(contactID);
     
     response
       .status(200)
       .json({
         status: "Success",
         message: "Contact retrieved successfully!",
-        data: contact
+        data: updatedContact
       })
       .end();
   }
