@@ -309,6 +309,11 @@ class ContactController {
         .end();
     }
 
+    if (request.file) {
+      deleteFile(contact.avatar);
+      updateData.avatar = request.file.filename;
+    }
+
     response
       .status(200)
       .json({
