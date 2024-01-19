@@ -11,7 +11,7 @@ export default function GridContact({ contact }) {
               <h3 className="truncate text-sm font-medium text-gray-900">
                 {`${contact.firstName} ${contact.lastName || ""}`}
               </h3>
-              <span className="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20">
+              <span className="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
                 {`${contact.title || ""}`}
               </span>
             </div>
@@ -31,7 +31,7 @@ export default function GridContact({ contact }) {
         {contact.email && <div className="flex w-0 flex-1">
             <a
               href={`mailto:${contact.email}`}
-              className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+              className="relative hover:bg-green-100 -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
             >
               <svg
                 className="h-5 w-5 text-gray-400"
@@ -48,7 +48,7 @@ export default function GridContact({ contact }) {
           <div className="-ml-px flex w-0 flex-1">
             <a
               href={`tel:${contact.phoneNumbers.mobile}`}
-              className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+              className="relative hover:bg-green-100 inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
             >
               <svg
                 className="h-5 w-5 text-gray-400"

@@ -6,32 +6,31 @@ import deleteFile from "../middleware/deleteFile";
 class ContactController {
   static async postContact(request, response, userID) {
     const contact = request.body;
+    console.log(contact)
     const requiredFields = ["firstName", "phoneNumbers"];
     const optionalFields = ["lastName", "email", "title", "relationship"];
 
     requiredFields.map((field) => {
       if (!contact[field]) {
-        response
+        return response
           .status(400)
           .json({
             status: "error",
             message: `Missing required field: ${field}`,
             data: null,
-          })
-          .end();
+          });
       }
       if (field === "phoneNumbers")
         try {
           contact.phoneNumbers = JSON.parse(contact.phoneNumbers);
         } catch (error) {
-          response
+          return response
             .status(400)
             .json({
               status: "error",
               message: "phoneNumbers field must be an object",
               data: null,
-            })
-            .end();
+            }).end();
         }
     });
 
@@ -52,7 +51,7 @@ class ContactController {
 
     const contactID = await dbClient.createContact(contact);
     // delete contact._id;
-    response
+    return response
       .status(201)
       .json({
         status: "Success",

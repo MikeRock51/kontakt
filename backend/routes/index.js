@@ -16,7 +16,7 @@ router.post("/contacts", async (req, res) => {
   const token = req.headers["auth_token"];
 
   if (!token) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       message: "Unauthorized! auth-token required",
       data: null,
@@ -58,7 +58,7 @@ router.put("/contacts/:contactID", async (req, res) => {
   const token = req.headers["auth_token"];
 
   if (!token) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       message: "Unauthorized! auth-token required",
       data: null,
@@ -69,7 +69,7 @@ router.put("/contacts/:contactID", async (req, res) => {
   const userID = await redisClient.get(key);
 
   if (!userID) {
-    res.status(401).json({
+    return res.status(401).json({
       status: "error",
       message: "Unauthorized! invalid token",
       data: null,

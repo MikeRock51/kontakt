@@ -13,3 +13,16 @@ export async function FetchUserCotacts(authToken) {
     return false;
   }
 }
+
+export async function CreateContact(authToken, contactData) {
+  try {
+    const response = await axios.post(API_URL + "/contacts", contactData, { headers: {auth_token: authToken, "Content-Type": "multipart/form-data",} });
+    console.log(response);
+    toast.success(response.data?.message);
+    return true;
+  } catch (error) {
+    console.log(error);
+    toast.error(error.response?.data?.error || "Network error");
+    return false;
+  }
+}
