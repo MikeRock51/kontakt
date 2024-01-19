@@ -68,7 +68,7 @@ export default function ContactForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.firstName}
-                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                 placeholder="John"
               />
             </div>
@@ -94,7 +94,7 @@ export default function ContactForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.lastName}
-                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                 placeholder="Doe"
               />
             </div>
@@ -121,7 +121,7 @@ export default function ContactForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
-                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                 placeholder="johndoe@example.com"
               />
             </div>
@@ -147,7 +147,7 @@ export default function ContactForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.title}
-                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                 placeholder="Mr."
               />
             </div>
@@ -176,7 +176,7 @@ export default function ContactForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.relationship}
-                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                 placeholder="Doe"
               />
             </div>
@@ -203,7 +203,7 @@ export default function ContactForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.mobile}
-                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                 placeholder="+2348020585698"
               />
             </div>
@@ -230,7 +230,7 @@ export default function ContactForm() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.home}
-                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                 placeholder="+015265895"
               />
             </div>
@@ -256,7 +256,7 @@ export default function ContactForm() {
                 id="avatar"
                 name="avatar"
                 onChange={(e) => formik.setFieldValue("avatar", e.currentTarget.files[0])}
-                className="w-full -ml-10 px-5 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                className="w-full -ml-10 px-5 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
               />
             </div>
           </div>
@@ -267,7 +267,7 @@ export default function ContactForm() {
             <button
               type="submit"
               disabled={loading}
-              className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold disabled:bg-gray-500"
+              className="block w-full max-w-xs mx-auto bg-green-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold disabled:bg-gray-500"
             >
               {loading ? "Creating..." : "CREATE CONTACT"}
             </button>

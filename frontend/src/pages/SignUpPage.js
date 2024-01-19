@@ -58,7 +58,7 @@ export default function SignUpPage() {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.username}
-                        className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                         placeholder="mikerock"
                       />
                     </div>
@@ -83,7 +83,7 @@ export default function SignUpPage() {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.email}
-                        className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                        className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                         placeholder="johnsmith@example.com"
                       />
                     </div>
@@ -108,7 +108,7 @@ export default function SignUpPage() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.password}
-                      className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                       placeholder="************"
                     />
                   </div>
@@ -131,7 +131,7 @@ export default function SignUpPage() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.confirmPassword}
-                      className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500"
+                      className="w-full -ml-10 px-5 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-green-500"
                       placeholder="************"
                     />
                   </div>
@@ -142,7 +142,7 @@ export default function SignUpPage() {
                 </div>
                 <div className="flex -mx-3">
                   <div className="w-full px-3 mb-5">
-                    <button type="submit" disabled={loading} className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold disabled:bg-gray-500">
+                    <button type="submit" disabled={loading} className="block w-full max-w-xs mx-auto bg-green-500 hover:bg-green-700 focus:bg-green-700 text-white rounded-lg px-3 py-3 font-semibold disabled:bg-gray-500">
                       {loading ? "Registering..." : "REGISTER NOW"}
                     </button>
                   </div>

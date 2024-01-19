@@ -16,7 +16,7 @@ export default function NavLink({ name, link }) {
       <RouterNavLink
         to={link}
         className={`flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800 ${
-          isActive ? 'text-indigo-500' : ''
+          isActive ? 'text-green-500' : ''
         }`}
         onClick={handleClick}
       >

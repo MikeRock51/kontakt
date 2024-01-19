@@ -43,7 +43,7 @@ export default function ContactCard() {
             className="h-full w-full object-cover"
           />
         </div>
-        <div className="p-6">
+        {contact && <div className="p-6">
           <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
             {`${contact?.title || ""} ${contact?.firstName} ${
               contact?.lastName || ""
@@ -158,7 +158,7 @@ export default function ContactCard() {
               </div>
             )}
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );
