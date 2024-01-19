@@ -9,7 +9,7 @@ export async function FetchUserCotacts(authToken) {
     console.log(response);
   } catch (error) {
     console.log(error);
-    toast.error(error.response?.data?.error || "Network error");
+    toast.error(error.response?.data?.message || "Network error");
     return false;
   }
 }
@@ -22,7 +22,7 @@ export async function CreateContact(authToken, contactData) {
     return true;
   } catch (error) {
     console.log(error);
-    toast.error(error.response?.data?.error || "Network error");
+    toast.error(error.response?.data?.message || "Network error");
     return false;
   }
 }

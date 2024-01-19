@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post("/users", UsersController.postNew);
 router.post("/sign_in", AuthController.signIn);
-router.get("/sign_out", AuthController.signOut);
+router.delete("/sign_out", AuthController.signOut);
 router.get("/users/me", AuthController.getMe);
 router.post("/contacts", async (req, res) => {
   const token = req.headers["auth_token"];

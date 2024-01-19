@@ -29,7 +29,7 @@ export default function GridContactList() {
   }, [updated]);
 
   return (
-    <div className="px-4">
+    <div className="px-8 mt-20">
       <h2 className="mt-8 text-4xl mb-4">Contact List</h2>
       <button onClick={() => setShowContactForm(true)} className="bg-green-100 px-5 py-2 rounded-md text-bold text-green-800 mb-5">New Contact</button>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

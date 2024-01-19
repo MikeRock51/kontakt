@@ -32,11 +32,11 @@ export async function LoginUser(userData) {
 
 export async function LogoutUser(token) {
   try {
-    const response = await axios.delete(API_URL + "/logout", {
-      headers: { "auth-token": token },
+    const response = await axios.delete(API_URL + "/sign_out", {
+      headers: { "auth_token": token },
     });
     console.log(response.data);
-    toast.success(response.data.message);
+    toast.success("Logout successfull");
     return true;
   } catch (error) {
     console.log(error);

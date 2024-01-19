@@ -7,9 +7,9 @@ function Toast() {
         top: 50,
       }}
       toastOptions={{
-        duration: 5000,
+        duration: 3000,
         success: {
-          duration: 5000,
+          duration: 3000,
           style: {
             background: "#4d7c0f",
             color: "#d9f99d",
@@ -20,7 +20,7 @@ function Toast() {
           },
         },
         error: {
-          duration: 5000,
+          duration: 3000,
           style: {
             background: "#b91c1c",
             color: "#fecaca",
