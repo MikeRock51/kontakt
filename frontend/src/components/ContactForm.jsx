@@ -32,13 +32,7 @@ export default function ContactForm() {
       const formData = new FormData();
       for (const [key, value] of Object.entries(values)) {
         formData.append(key, value)
-        if (key === "avatar") console.log(value)
       }
-    //   formData.append("avatar", values.avatar);
-    //   formData.append(JSON.stringify(values));
-    //   console.log(authToken)
-
-      console.log(formData.has("firstName"))
 
       const success = await CreateContact(authToken, formData);
       console.log(success)

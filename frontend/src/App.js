@@ -5,16 +5,18 @@ import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import ContactsPage from "./pages/ContactsPage";
 import ContactCard from "./components/ContactCard";
+import SideNav from "./components/SideNav";
 
 function App() {
   return (
       <Router>
-        <div className="App h-screen">
+        <div className="App h-screen flex">
             {/* <header className="fixed left-0 right-0 top-0 z-20">
               <NavBar />
             </header> */}
+            <SideNav />
             <Toast />
-            <Routes>
+            <Routes className="flex-grow">
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/contacts" element={<ContactsPage />} />
