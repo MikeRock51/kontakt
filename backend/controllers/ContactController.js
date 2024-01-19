@@ -7,7 +7,7 @@ class ContactController {
   static async postContact(request, response, userID) {
     const contact = request.body;
     const requiredFields = ["firstName", "phoneNumbers"];
-    const optionalFields = ["lastName", "email", "title"];
+    const optionalFields = ["lastName", "email", "title", "relationship"];
 
     requiredFields.map((field) => {
       if (!contact[field]) {
@@ -108,7 +108,7 @@ class ContactController {
     const contactID = request.params.contactID;
 
     if (!token) {
-      response.status(401).json({
+      return response.status(401).json({
         status: "error",
         message: "Unauthorized! auth-token required",
         data: null,
@@ -119,7 +119,7 @@ class ContactController {
     const userID = await redisClient.get(key);
 
     if (!userID) {
-      response.status(401).json({
+      return response.status(401).json({
         status: "error",
         message: "Unauthorized! invalid token",
         data: null,
@@ -127,7 +127,7 @@ class ContactController {
     }
 
     if (!contactID) {
-      response.status(400).json({
+      return response.status(400).json({
         status: "error",
         message: "Missing required contactID",
         data: null,
@@ -137,7 +137,7 @@ class ContactController {
     const contact = await dbClient.fetchContact(contactID);
 
     if (!contact) {
-      response
+      return response
         .status(404)
         .json({
           status: "Error",
@@ -146,7 +146,7 @@ class ContactController {
         })
         .end();
     } else if (contact.userID.toString() !== userID) {
-      response
+      return response
         .status(401)
         .json({
           status: "Error",
@@ -177,6 +177,7 @@ class ContactController {
       "lastName",
       "email",
       "title",
+      "relationship",
     ];
 
     if (!contactID) {
@@ -212,6 +213,19 @@ class ContactController {
       if (!value || !contactFields.includes(key)) {
         delete updateData[key];
       }
+      if (key === "phoneNumbers")
+        try {
+          updateData.phoneNumbers = JSON.parse(updateData.phoneNumbers);
+        } catch (error) {
+          response
+            .status(400)
+            .json({
+              status: "error",
+              message: "phoneNumbers field must be an object",
+              data: null,
+            })
+            .end();
+        }
     }
 
     if (request.file) {

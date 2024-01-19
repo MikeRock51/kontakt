@@ -9,7 +9,7 @@ export default function GridContactList() {
   const { authToken } = useUserStore();
   const API_URL = process.env.REACT_APP_API_URL;
 
-  async function FetchUserContacts() {
+  async function fetchUserContacts() {
     try {
       const response = await axios.get(API_URL + "/users/contacts", { headers: {auth_token: authToken} });
       console.log(response);
@@ -22,16 +22,16 @@ export default function GridContactList() {
   }
 
   useEffect(() => {
-    FetchUserContacts();
+    fetchUserContacts();
   }, []);
 
   console.log(contacts)
 
   return (
     <div className="px-8">
-      <h2 className="mt-8 text-3xl mb-4">Contact List</h2>
+      <h2 className="mt-8 text-4xl mb-4">Contact List</h2>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <GridContact />
+        {contacts.map((contact) => <GridContact contact={contact} />)}
       </ul>
     </div>
   );
