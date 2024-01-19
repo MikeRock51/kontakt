@@ -1,7 +1,6 @@
 export default function GridContact({ contact }) {
   const API_URL = process.env.REACT_APP_API_URL;
 
-  console.log(contact);
   return (
     <li className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
       <a href={`contacts/${contact._id}`}>

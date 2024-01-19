@@ -15,7 +15,7 @@ export default function GridContactList() {
   async function fetchUserContacts() {
     try {
       const response = await axios.get(API_URL + "/users/contacts", { headers: {auth_token: authToken} });
-      console.log(response);
+      // console.log(response);
       setContacts(response.data.data);
     } catch (error) {
       console.log(error);
@@ -33,7 +33,7 @@ export default function GridContactList() {
       <h2 className="mt-8 text-4xl mb-4">Contact List</h2>
       <button onClick={() => setShowContactForm(true)} className="bg-green-100 px-5 py-2 rounded-md text-bold text-green-800 mb-5">New Contact</button>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {contacts.map((contact) => <GridContact contact={contact} />)}
+        {contacts.map((contact) => <GridContact contact={contact} key={contact._id} />)}
       </ul>
       {showContactForm && <ContactFormModal />}
     </div>
