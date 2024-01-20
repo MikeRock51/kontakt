@@ -6,6 +6,7 @@ import SignInPage from "./pages/SignInPage";
 import ContactsPage from "./pages/ContactsPage";
 import ContactCard from "./components/ContactCard";
 import SideNav from "./components/SideNav";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -22,10 +23,7 @@ function App() {
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/contacts/:id" element={<ContactCard />} />
-            {/* <Route path="/" element={<LandingPage />} />
-              <Route path="/recipes/new" element={<CreateRecipe />} />
-              <Route path="/recipes/me" element={<MyRecipes />} />
-              <Route path="/yishu" element={<ChatPage />} /> */}
+            <Route path="/" element={<HomePage />} />
           </Routes>
         </div>
       </div>

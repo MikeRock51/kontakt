@@ -21,12 +21,12 @@ export default function SideNav() {
 
 
   return (
-    <div class="min-h-screen flex flex-row bg-gray-100 justify-start">
-      <div class="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
-        <div class="flex items-center justify-center h-20 shadow-md">
-          <h1 class="text-3xl uppercase text-green-500">Kontakt</h1>
+    <div className="min-h-screen flex flex-row bg-gray-100 justify-start">
+      <div className="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
+        <div className="flex items-center justify-center h-20 shadow-md">
+          <a href="/" className="text-3xl uppercase text-green-500">Kontakt</a>
         </div>
-        <ul class="flex flex-col py-4">
+        <ul className="flex flex-col py-4">
           {Object.keys(currentUser ? authLinks : unAuthLinks).map((key) => (
               <NavLink name={key} link={currentUser ? authLinks[key] : unAuthLinks[key]} />
             ))}
