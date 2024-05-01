@@ -21,9 +21,9 @@ export default function SideNav() {
 
 
   return (
-    <div className="min-h-screen flex flex-row bg-gray-100 justify-start">
-      <div className="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
-        <div className="flex items-center justify-center h-20 shadow-md">
+    <div className="min-h-screen flex flex-row bg-gray-100 justify-start border-4 border-green-100 rounded-r-3xl">
+      <div className="flex flex-col w-56 bg-white rounded-r-2xl overflow-hidden">
+        <div className="flex items-center justify-center h-20 shadow-md shadow-green-50">
           <a href="/" className="text-3xl uppercase text-green-500">Kontakt</a>
         </div>
         <ul className="flex flex-col py-4">
